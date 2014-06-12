@@ -38,7 +38,6 @@ namespace Timer
 
         public static async Task<T> Load<T>(string file)
         {
-
             IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication();
             T obj = Activator.CreateInstance<T>();
 

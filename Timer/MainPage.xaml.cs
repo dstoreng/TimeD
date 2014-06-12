@@ -340,6 +340,5 @@ namespace Timer
             grid.Children.Add(picker);
             stackpanelTimer.Children.Add(grid);
         }
-
     }
 }
