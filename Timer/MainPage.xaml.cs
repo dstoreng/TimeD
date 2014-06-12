@@ -230,7 +230,6 @@ namespace Timer
                 TimeSinceLast.Text = "00:00:00";
                 SWText.Text = "00:00:00";
                 numStopwatches = 0;
-
                 return;
             }
             // First press
