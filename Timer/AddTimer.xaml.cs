@@ -12,25 +12,27 @@ namespace Timer
 {
     public partial class AddTimer : PhoneApplicationPage
     {
+        private ViewModel viewModel;
         public AddTimer()
         {
             InitializeComponent();
 
+            viewModel = ViewModel.GetInstance();
+
             TimespanPicker.Value = new System.TimeSpan(0, 1, 0);
-            Textbox.Text = "Timer " + (MainPage.timers + 1);
+            Textbox.Text = "Timer";
         }
 
         private void saveClick(object sender, EventArgs e)
         {
             String timespan = TimespanPicker.Value.ToString();
-            String description = Textbox.Text + ":";
+            String description = Textbox.Text;
             Boolean notify = (Boolean)ToggleswitchNotify.IsChecked;
 
-            MainPage.newDescription = description;
-            MainPage.newTimespan = timespan;
-            MainPage.doNotify = notify;
+            viewModel.AddTimer(description, timespan, notify);
 
-            NavigationService.GoBack();
+            if(NavigationService.CanGoBack)
+                NavigationService.GoBack();
         }
 
     }

@@ -26,6 +26,7 @@ namespace Timer
         private TimeSpan _prevValue;
         private TimeSpan _lapValue;
         public Boolean Paused { get { return _paused; } }
+        public Boolean Running { get { return _running; } }
 
         public TimeSpan Value
         {
@@ -45,15 +46,7 @@ namespace Timer
                 _lastValue = value;
                 OnPropertyChanged("LastValue");
             }
-        }
-
-        public Boolean Running
-        {
-            get
-            {
-                return _running;
-            }
-        }
+        } 
 
         public void Start()
         {
@@ -92,20 +85,13 @@ namespace Timer
             _timer.Stop();
         }
 
-        public void Stop()
-        {
-            _timer.Stop();
-            _running = false;
-            _startTime = DateTime.MinValue;
-        }
-
         public void Split()
         {
             _lapValue = _value - _prevValue;
             _prevValue = _value;
         }
 
-        public TimeSpan GetLap()
+        public TimeSpan GetSplit()
         {
             return _lapValue;
         }

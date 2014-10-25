@@ -14,7 +14,7 @@ namespace Timer
         private Timer _timer;
         private Alarm _alarm;
         public String id { get; set; }
-        public String Name { get; set; }
+        public String Name { get { return _alarm.Content; } }
         public TimeSpan Timespan { get; set; }
         public Boolean Notify { get; set; }
         public Boolean Enabled { get; set; }
@@ -27,6 +27,16 @@ namespace Timer
                     TimeSpan.Zero : XmlConvert.ToTimeSpan(value);
             }
         }
+
+        public String NotifyConverter
+        {
+            get 
+            { 
+                String msg = (Notify) ? "On" : "Off";
+                return msg; 
+            }
+        }
+
         public Alarm Alarm
         {
             get { return _alarm; }
@@ -42,8 +52,7 @@ namespace Timer
         public Event(String timespan, String description, Boolean notify)
         {
             Timespan = System.TimeSpan.Parse(timespan);
-            Name = Guid.NewGuid().ToString();
-            _alarm = new Alarm(Name);
+            _alarm = new Alarm(Guid.NewGuid().ToString());
             _alarm.Content = description;
             _alarm.BeginTime = DateTime.Now + Timespan;
             _alarm.RecurrenceType = RecurrenceInterval.None;

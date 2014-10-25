@@ -29,7 +29,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="9*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="7*"/>
                         <RowDefinition Height="64*"/>
                         <RowDefinition Height="18*"/>
                     </Grid.RowDefinitions>
@@ -37,16 +37,47 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-
+                    
                     <TextBlock x:Name="SWText" FontSize="45" Text="00:00:00" FontWeight="Thin"
-                               TextAlignment="Left" Margin="20,0,0,0" Grid.Row="0" Grid.Column="0"/>
+                                   TextAlignment="Left" Margin="20,0,0,0" Grid.Row="0" Grid.Column="0"/>
                     <TextBlock x:Name="TimeSinceLast" FontSize="35" Text="00:00:00" FontWeight="Thin"
-                               TextAlignment="Left" Margin="30,11,0,-10" Grid.Row="0" Grid.Column="1"/>
-                    <TextBlock FontSize="30" FontFamily="Ubuntu" FontWeight="Light" Text="         Lap       Total" 
-                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                   TextAlignment="Left" Margin="30,11,0,-10" Grid.Row="0" Grid.Column="1"/>
+
+                    <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="#" HorizontalAlignment="Center" 
+                                   FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                        <TextBlock Grid.Column="1" Text="Lap" 
+                                   FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                        <TextBlock Grid.Column="2" Text="Total" 
+                                   FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                    </Grid>
                     <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                         <StackPanel VerticalAlignment="Stretch">
-                            <ItemsControl x:Name="SwElements" FontSize="30" FontWeight="ExtraLight"/>
+                            <ItemsControl x:Name="ItemsControlStopwatches" Tag="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="20,0,20,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="4*" />
+                                                <ColumnDefinition Width="4*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="{Binding Number}" Tag="{Binding}" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Split}" Tag="{Binding}" />
+                                            <TextBlock Grid.Column="2" Text="{Binding Total}" Tag="{Binding}" />
+                                            
+                                        </Grid>
+
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </StackPanel>
                     </ScrollViewer>
 
@@ -72,11 +103,41 @@
 
             <!--Panorama item two-->
             <phone:PivotItem x:Name="timerHeader" Header="Timer" Margin="12,0">
-                <ScrollViewer>
-                    <StackPanel x:Name="stackpanelTimer" VerticalAlignment="Stretch"/>
-                </ScrollViewer>
-            </phone:PivotItem>
+                <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                    <ItemsControl x:Name="ItemsControlTimers" Tag="{Binding}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
 
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Name}" 
+                                               FontSize="{StaticResource PhoneFontSizeMedium}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Alarm:" 
+                                               FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding NotifyConverter}" 
+                                               FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                    <cf2Toolkit:TimeSpanPicker Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" 
+                                                   Value="{Binding Timespan}" />
+                                    <tk:ToggleSwitch Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Content="" Tag="{Binding}"
+                                                     Unchecked="AlarmSwitch_Unchecked" Checked="AlarmSwitch_Checked"/>
+                                    
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                
+            </phone:PivotItem>
         </phone:Pivot>
 
     </Grid>

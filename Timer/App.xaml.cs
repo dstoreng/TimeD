@@ -84,6 +84,7 @@ namespace Timer
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            MainPage.SaveData();
         }
 
         // Code to execute if a navigation fails
@@ -102,6 +103,7 @@ namespace Timer
             if (Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
+                Debug.WriteLine(e.ExceptionObject.InnerException +  "  "+ e.ExceptionObject.StackTrace + " SOURCE= " + e.ExceptionObject.Source);
                 Debugger.Break();
             }
         }
